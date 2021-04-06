@@ -7,4 +7,5 @@ import java.util.List;
 public interface PostService {
     public void save(PostVO postVO);
     public List<PostVO> findAll();
+    public PostVO findById(int id);
 }

@@ -11,5 +11,8 @@
     <select id="findAll" resultType="PostVO">
         SELECT * FROM post
     </select>
+    <select id="findById" resultType="PostVO">
+        SELECT * FROM post WHERE id=#{id}
+    </select>
 </mapper>
 

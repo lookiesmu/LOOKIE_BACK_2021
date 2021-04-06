@@ -20,4 +20,9 @@ public class PostServiceImpl implements PostService {
     public List<PostVO> findAll() {
         return postMapper.findAll();
     }
+
+    @Override
+    public PostVO findById(int id) {
+        return postMapper.findById(id);
+    }
 }

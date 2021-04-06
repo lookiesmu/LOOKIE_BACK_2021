@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="kr">
 <head>
@@ -34,22 +35,41 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Create Post!</h1>
                         </div>
-                        <form action="/post" method="post" class="user">
-                            <div class="form-group">
-                                <input type="text" class="form-control form-control-user" name="title"
-                                       placeholder="Title">
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control form-control-user" name="content"/></textarea>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control form-control-user"
-                                       name="name" placeholder="name">
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-user btn-block">
-                                Register Post
-                            </button>
-                        </form>
+                        <c:choose>
+                            <c:when test="${post!=null}">
+                                <form action="/post" method="post" class="user">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" name="title"
+                                               placeholder="Title" readonly value="${post.title}">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control form-control-user" name="content" readonly>${post.content}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user"
+                                               name="name" placeholder="name" readonly value="${post.name}">
+                                    </div>
+                                </form>
+                            </c:when>
+                            <c:otherwise>
+                                <form action="/post" method="post" class="user">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" name="title"
+                                               placeholder="Title">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control form-control-user" name="content"/></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user"
+                                               name="name" placeholder="name">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                                        Register Post
+                                    </button>
+                                </form>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </div>
