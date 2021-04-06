@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 @Slf4j
 public class TestController{
-    @Autowired
-    private PostMapper testMapper;
+//    @Autowired
+//    private PostMapper testMapper;
 
     @GetMapping
     public String getTest(){
-        testMapper.test().stream().forEach(t -> log.info(t.toString()));
+//        testMapper.test().stream().forEach(t -> log.info(t.toString()));
         return "test";
     }
 }

@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 public interface PostMapper {
-    @Select("select * from post")
-    public List<PostVO> test();
+//    @Select("select * from post")
+//    public List<PostVO> test();
+
+    public void save(PostVO postVO);
 }

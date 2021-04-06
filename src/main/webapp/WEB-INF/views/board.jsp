@@ -372,8 +372,10 @@
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                    </div>
+                        <h6 class="m-0 font-weight-bold text-primary" style="display: inline;">DataTables Example</h6>
+                        <a href="/post" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" style="float: right;">
+                            Register
+                        </a>                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
