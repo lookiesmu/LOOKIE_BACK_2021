@@ -10,4 +10,5 @@ public interface PostMapper {
 //    public List<PostVO> test();
 
     public void save(PostVO postVO);
+    public List<PostVO> findAll();
 }

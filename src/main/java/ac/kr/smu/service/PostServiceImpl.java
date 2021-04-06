@@ -5,6 +5,8 @@ import ac.kr.smu.vo.PostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PostServiceImpl implements PostService {
     @Autowired
@@ -12,5 +14,10 @@ public class PostServiceImpl implements PostService {
 
     public void save(PostVO postVO){
         postMapper.save(postVO);
+    }
+
+    @Override
+    public List<PostVO> findAll() {
+        return postMapper.findAll();
     }
 }

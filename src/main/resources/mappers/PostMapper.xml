@@ -8,5 +8,8 @@
         INSERT INTO post(title,content,created_date,name)
         VALUES(#{title},#{content},#{created_date},#{name})
     </insert>
+    <select id="findAll" resultType="PostVO">
+        SELECT * FROM post
+    </select>
 </mapper>
 
