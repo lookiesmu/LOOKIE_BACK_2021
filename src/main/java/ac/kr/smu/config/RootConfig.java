@@ -31,7 +31,7 @@ public class RootConfig {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         try{
             dataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
-            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/DB_POST");
+            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/DB_POST?allowMultiQueries=true");
             dataSource.setUser("spring_yoon");
             dataSource.setPassword("111111");
             dataSource.setCheckoutTimeout(1000);

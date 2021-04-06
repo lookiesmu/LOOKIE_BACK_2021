@@ -14,5 +14,9 @@
     <select id="findById" resultType="PostVO">
         SELECT * FROM post WHERE id=#{id}
     </select>
+    <select id="update" resultType="PostVO">
+        UPDATE post SET title=#{title}, content=#{content},name=#{name} WHERE id=#{id};
+        SELECT * FROM post WHERE id=#{id}
+    </select>
 </mapper>
 

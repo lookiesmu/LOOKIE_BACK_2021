@@ -12,4 +12,5 @@ public interface PostMapper {
     public void save(PostVO postVO);
     public List<PostVO> findAll();
     public PostVO findById(int id);
+    public PostVO update(PostVO postVO);
 }

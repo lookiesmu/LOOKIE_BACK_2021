@@ -25,4 +25,9 @@ public class PostServiceImpl implements PostService {
     public PostVO findById(int id) {
         return postMapper.findById(id);
     }
+
+    @Override
+    public PostVO update(PostVO postVO) {
+        return postMapper.update(postVO);
+    }
 }

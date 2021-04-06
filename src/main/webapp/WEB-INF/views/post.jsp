@@ -38,6 +38,7 @@
                         <c:choose>
                             <c:when test="${post!=null}">
                                 <form action="/post" method="post" class="user">
+                                    <input type="number" name="id" value="${post.id}" hidden>
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user" name="title"
                                                placeholder="Title" readonly value="${post.title}">
@@ -49,6 +50,18 @@
                                         <input type="text" class="form-control form-control-user"
                                                name="name" placeholder="name" readonly value="${post.name}">
                                     </div>
+                                    <c:choose>
+                                        <c:when test="${!isModify}">
+                                            <a id="modify" href="/post/${post.id}?isModify=true" class="btn btn-primary btn-user btn-block">
+                                                Modify
+                                            </a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a id="modifySubmit" class="btn btn-primary btn-user btn-block">
+                                                Submit
+                                            </a>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </form>
                             </c:when>
                             <c:otherwise>
@@ -86,6 +99,31 @@
 
 <!-- Custom scripts for all pages-->
 <script src="/js/sb-admin-2.min.js"></script>
+
+<c:if test="${isModify}">
+    <script>
+        $("input").removeAttr("readonly")
+        $("textarea").removeAttr("readonly")
+        $("#modifySubmit").click(function (){
+            var postVO =new  Object()
+            postVO.id = $("[name='id']").val()
+            postVO.title = $("[name='title']").val()
+            postVO.content= $("[name='content']").val()
+            postVO.name = $("[name='name']").val()
+
+            $.ajax({
+                type:"PUT",
+                url:"/post",
+                contentType:"application/json; charset=utf-8",
+                data:JSON.stringify(postVO),
+                success:function (data) {
+                    if(data)
+                        location.href="/post/"+postVO.id
+                }
+            })
+        })
+    </script>
+</c:if>
 
 </body>
 
