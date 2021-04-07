@@ -39,4 +39,10 @@ public class PostController {
         model.addAttribute("isModify", false);
         return true;
     }
+
+    @DeleteMapping("/{postId}")
+    public @ResponseBody boolean deletePost(@PathVariable int postId){
+        postService.delete(postId);
+        return true;
+    }
 }

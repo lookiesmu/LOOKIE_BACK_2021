@@ -62,6 +62,10 @@
                                             </a>
                                         </c:otherwise>
                                     </c:choose>
+
+                                    <a id="delete" class="btn btn-danger btn-user btn-block">
+                                        Delete
+                                    </a>
                                 </form>
                             </c:when>
                             <c:otherwise>
@@ -100,12 +104,13 @@
 <!-- Custom scripts for all pages-->
 <script src="/js/sb-admin-2.min.js"></script>
 
+<!-- 글 수정 스크립트-->
 <c:if test="${isModify}">
     <script>
         $("input").removeAttr("readonly")
         $("textarea").removeAttr("readonly")
         $("#modifySubmit").click(function (){
-            var postVO =new  Object()
+            const postVO =new  Object()
             postVO.id = $("[name='id']").val()
             postVO.title = $("[name='title']").val()
             postVO.content= $("[name='content']").val()
@@ -125,6 +130,22 @@
     </script>
 </c:if>
 
+<!-- 글 삭제 스크립트-->
+<script>
+    $("#delete").click(function(){
+        const chk = confirm("정말로 삭제하시겠습니까?")
+        if(chk) {
+            $.ajax({
+                type: "DELETE",
+                url: "/post/" + $("[name='id']").val(),
+                success: function (data){
+                    if (data)
+                        location.href = "/board"
+                }
+            })
+        }
+    })
+</script>
 </body>
 
 </html>

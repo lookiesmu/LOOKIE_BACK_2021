@@ -13,4 +13,5 @@ public interface PostMapper {
     public List<PostVO> findAll();
     public PostVO findById(int id);
     public PostVO update(PostVO postVO);
+    public void delete(int id);
 }

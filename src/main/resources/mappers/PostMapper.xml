@@ -18,5 +18,8 @@
         UPDATE post SET title=#{title}, content=#{content},name=#{name} WHERE id=#{id};
         SELECT * FROM post WHERE id=#{id}
     </select>
+    <delete id="delete">
+        DELETE FROM post WHERE id=#{id}
+    </delete>
 </mapper>
 

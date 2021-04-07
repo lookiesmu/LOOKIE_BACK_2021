@@ -30,4 +30,9 @@ public class PostServiceImpl implements PostService {
     public PostVO update(PostVO postVO) {
         return postMapper.update(postVO);
     }
+
+    @Override
+    public void delete(int id) {
+        postMapper.delete(id);
+    }
 }
