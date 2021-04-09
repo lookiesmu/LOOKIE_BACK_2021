@@ -31,6 +31,8 @@ public class WebConfig implements WebApplicationInitializer {
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
 
+
+
         /*
         	인코딩 설정, 해주지 않으면 한글이 깨진다
         */

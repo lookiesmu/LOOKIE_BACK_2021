@@ -17,7 +17,7 @@ public class ServletConfig implements WebMvcConfigurer {
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         WebMvcConfigurer.super.configureViewResolvers(registry);
-        registry.jsp("./WEB-INF/views/",".jsp");
+        registry.jsp("/WEB-INF/views/",".jsp");
     }
     /*
     	정적 리소스 관련 설정
