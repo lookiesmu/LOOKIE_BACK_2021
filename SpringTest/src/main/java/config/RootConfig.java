@@ -23,9 +23,7 @@ import java.io.IOException;
 public class RootConfig {
     @Autowired
     private ApplicationContext applicationContext;
-    /*
-    	커넥션 풀을 이용해 DB에 연결하는 클래스
-    */
+
     @Bean
     public ComboPooledDataSource comboPooledDataSource(){
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
@@ -39,9 +37,8 @@ public class RootConfig {
 
         return dataSource;
     }
-    /*
-     MyBatis 설정을 위한 클래스
-    */
+
+
     @Bean
     public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSources){
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
@@ -58,9 +55,8 @@ public class RootConfig {
     public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactoryBean){
         return new SqlSessionTemplate(sqlSessionFactoryBean);
     }
-    /*
-    	트랜잭션을 위한 클래스
-    */
+
+
     @Bean
     public DataSourceTransactionManager dataSourceTransactionManager(DataSource dataSource){
         return new DataSourceTransactionManager(dataSource);
