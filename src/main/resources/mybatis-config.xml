@@ -6,6 +6,7 @@
 
     <typeAliases>
         <typeAlias type="ac.kr.smu.vo.PostVO" alias="PostVO"/>
+<!--        <typeAlias type="ac.kr.smu.vo.UserVO" alias="UserVO"/>-->
     </typeAliases>
 
 </configuration>
