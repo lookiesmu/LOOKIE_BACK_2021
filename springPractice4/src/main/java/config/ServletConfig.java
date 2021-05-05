@@ -1,9 +1,13 @@
 package config;
 
+import ArgumentResolver.UserArgumentResolver;
 import Interceptor.LoginInterceptor;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.*;
+
+import java.util.List;
 
 @EnableWebMvc // WebMvc관련 자동 설정
 @Configuration // 설정관련 클래스라는 Annotation
@@ -34,5 +38,11 @@ public class ServletConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         WebMvcConfigurer.super.addInterceptors(registry);
         registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/board").addPathPatterns("/post/**");
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        WebMvcConfigurer.super.addArgumentResolvers(resolvers);
+        resolvers.add(new UserArgumentResolver());
     }
 }

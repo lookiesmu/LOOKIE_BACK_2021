@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import service.PostService;
 import vo.PostVO;
+import vo.UserVO;
 
 @Controller
 @RequestMapping("/post")
@@ -22,13 +23,12 @@ public class PostController {
             model.addAttribute("isModify", true);
         else
             model.addAttribute("isModify", false);
-
         return "post";
     }
 
-    //작성 후 redirect
     @PostMapping
-    public String postPost(PostVO postVO){
+    public String postPost(PostVO postVO, UserVO userVO){
+        postVO.setUser(userVO);
         postService.save(postVO);
         return "redirect:/board";
     }

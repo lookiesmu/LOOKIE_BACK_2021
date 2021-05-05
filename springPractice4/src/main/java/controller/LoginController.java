@@ -31,6 +31,7 @@ public class LoginController {
         if(result) {
             //세션 만료 시간
             session.setMaxInactiveInterval(60*30);
+            //세션 값 설정
             session.setAttribute("userSession",userVO.getEmail());
         }
 

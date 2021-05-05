@@ -1,5 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page session="false" pageEncoding="UTF-8"%>
 
 <html lang="kr" >
 <head>
@@ -47,7 +47,7 @@
                                         <textarea class="form-control form-control-user" name="content" readonly>${post.content}</textarea>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" name="name" placeholder="name" readonly value="${post.name}">
+                                        <input type="text" class="form-control form-control-user" name="name" placeholder="name" value="${post.user.name}" readonly>
                                     </div>
                                     <c:choose>
                                         <c:when test="${!isModify}">
@@ -75,9 +75,6 @@
                                     <div class="form-group">
                                         <textarea class="form-control form-control-user" name="content"></textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" name="name" placeholder="name">
-                                    </div>
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
                                         Register Post
                                     </button>
@@ -91,33 +88,36 @@
 
     </div>
 </div>
+
 <!-- Bootstrap core JavaScript-->
 <script src="/vendor/jquery/jquery.min.js"></script>
+
 <c:if test="${isModify}">
     <script>
-        $("input").removeAttr("readonly")
+        $("[name='title']").removeAttr("readonly")
         $("textarea").removeAttr("readonly")
         $("#modifySubmit").click(function (){
             var postVO =new  Object()
             postVO.id = $("[name='id']").val()
             postVO.title = $("[name='title']").val()
             postVO.content= $("[name='content']").val()
-            postVO.name = $("[name='name']").val()
 
             $.ajax({
                 type:"PUT",
                 url:"/post",
                 contentType:"application/json; charset=utf-8",
-                data:JSON.stringify(postVO),
-                success:function (data) {
-                    if(data)
-                        //location.href="/post/"+postVO.id
-                        location.href="/board"
+                data: JSON.stringify(postVO),
+                success:function(data) {
+                    if(data) {
+                        //location.href = "/post/"+ postVO.id
+                        location.href = "/board"
+                    }
+
                 }
+
             })
         })
     </script>
-
 </c:if>
 
 <script>
@@ -143,6 +143,7 @@
 
 <!-- Custom scripts for all pages-->
 <script src="/js/sb-admin-2.min.js"></script>
+
 
 </body>
 

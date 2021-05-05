@@ -401,16 +401,14 @@
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <c:forEach items="${postList}" var="post">
+                                <c:forEach items="${postList}" var="post">
                                     <tr>
                                         <td>${post.id}</td>
                                         <td><a href="/post/${post.id}">${post.title}</a></td>
-                                        <td>${post.name}</td>
-                                        <td>
-                                            <fmt:formatDate value="${post.created_date}" pattern="yyyy-MM-dd"/>
-                                        </td>
+                                        <td>${post.user.name}</td>
+                                        <td><fmt:formatDate value="${post.created_date}" pattern="yyyy-MM-dd"/></td>
                                     </tr>
-                                    </c:forEach>
+                                </c:forEach>
                                 </tbody>
 
                             </table>

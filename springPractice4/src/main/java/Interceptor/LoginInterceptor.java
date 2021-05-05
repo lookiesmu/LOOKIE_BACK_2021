@@ -18,6 +18,7 @@ public class LoginInterceptor implements HandlerInterceptor {
          */
         boolean chk=session.getAttribute("userSession") != null;
 
+        //유저 세션 없으면 돌아감
         if(!chk)
             response.sendRedirect("/");
 
