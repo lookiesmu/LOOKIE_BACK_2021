@@ -1,11 +1,9 @@
 package config;
 
+import Interceptor.LoginInterceptor;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 
 @EnableWebMvc // WebMvc관련 자동 설정
 @Configuration // 설정관련 클래스라는 Annotation
@@ -30,5 +28,11 @@ public class ServletConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/scss/**").addResourceLocations("/resources/scss/");
         registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/");
         registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        WebMvcConfigurer.super.addInterceptors(registry);
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/board").addPathPatterns("/post/**");
     }
 }

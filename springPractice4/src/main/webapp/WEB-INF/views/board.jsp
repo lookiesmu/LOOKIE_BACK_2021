@@ -459,7 +459,7 @@
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
+                <a class="btn btn-primary" id="logout">Logout</a>
             </div>
         </div>
     </div>
@@ -481,6 +481,18 @@
 
 <!-- Page level custom scripts -->
 <script src="/js/demo/datatables-demo.js"></script>
+
+<script>
+    $("#logout").click(function (){
+        $.ajax({
+            type:'POST',
+            url:'/logout',
+            success: function () {
+                location.href='/'
+            }
+        })
+    })
+</script>
 
 </body>
 
