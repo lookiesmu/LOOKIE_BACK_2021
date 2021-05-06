@@ -402,7 +402,7 @@
                                         <tr>
                                             <td>${post.id}</td>
                                             <td><a href="/post/${post.id}">${post.title}</a></td>
-                                            <td>${post.name}</td>
+                                            <td>${post.user.name}</td>
                                             <td>
                                                 <fmt:formatDate value="${post.created_date}"  pattern="yyyy-MM-dd"></fmt:formatDate>
                                             </td>

@@ -26,4 +26,10 @@ public class UserServiceImpl implements UserService {
         return password.equals(userMapper.findByEmail(email).getPassword());
 
     }
+
+    @Override
+    public UserVO findByEmail(String email) {
+        return userMapper.findByEmail(email);
+    }
+
 }

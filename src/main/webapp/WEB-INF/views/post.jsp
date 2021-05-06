@@ -48,7 +48,7 @@
                                     </div>
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user"
-                                               name="name" placeholder="name" readonly value="${post.name}">
+                                               name="name" placeholder="name" readonly value="${post.user.name}">
                                     </div>
                                     <c:choose>
                                         <c:when test="${!isModify}">
@@ -77,10 +77,6 @@
                                     <div class="form-group">
                                         <textarea class="form-control form-control-user" name="content"/></textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user"
-                                               name="name" placeholder="name">
-                                    </div>
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
                                         Register Post
                                     </button>
@@ -107,14 +103,13 @@
 <!-- 글 수정 스크립트-->
 <c:if test="${isModify}">
     <script>
-        $("input").removeAttr("readonly")
+        $("[name='title']").removeAttr("readonly")
         $("textarea").removeAttr("readonly")
         $("#modifySubmit").click(function (){
             const postVO =new  Object()
             postVO.id = $("[name='id']").val()
             postVO.title = $("[name='title']").val()
             postVO.content= $("[name='content']").val()
-            postVO.name = $("[name='name']").val()
 
             $.ajax({
                 type:"PUT",
