@@ -36,4 +36,8 @@ public class LoginController {
         return ResponseEntity.ok(body);
 
     }
+    @PostMapping("/logout")
+    public void logout(HttpSession session){
+        session.invalidate();
+    }
 }
