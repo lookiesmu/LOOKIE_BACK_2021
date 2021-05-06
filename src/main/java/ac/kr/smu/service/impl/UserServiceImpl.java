@@ -20,4 +20,10 @@ public class UserServiceImpl implements UserService {
     public boolean checkEmailDuplication(String email) {
         return userMapper.checkEmailDuplication(email)==0;
     }
+
+    @Override
+    public boolean checkPassword(String email, String password) {
+        return password.equals(userMapper.findByEmail(email).getPassword());
+
+    }
 }

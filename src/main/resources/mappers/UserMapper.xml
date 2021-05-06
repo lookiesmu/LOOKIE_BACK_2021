@@ -12,4 +12,9 @@
     <select id="checkEmailDuplication" resultType="int">
         SELECT COUNT(*) FROM user where email=#{email}
     </select>
+
+    <select id="findByEmail" resultType="UserVO">
+        SELECT * FROM user where email=#{email}
+    </select>
+
 </mapper>
