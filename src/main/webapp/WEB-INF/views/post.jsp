@@ -50,22 +50,23 @@
                                         <input type="text" class="form-control form-control-user"
                                                name="name" placeholder="name" readonly value="${post.user.name}">
                                     </div>
-                                    <c:choose>
-                                        <c:when test="${!isModify}">
-                                            <a id="modify" href="/post/${post.id}?isModify=true" class="btn btn-primary btn-user btn-block">
-                                                Modify
-                                            </a>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <a id="modifySubmit" class="btn btn-primary btn-user btn-block">
-                                                Submit
-                                            </a>
-                                        </c:otherwise>
-                                    </c:choose>
-
-                                    <a id="delete" class="btn btn-danger btn-user btn-block">
-                                        Delete
-                                    </a>
+                                    <c:if test="${userSession == post.user.email}">
+                                        <c:choose>
+                                            <c:when test="${!isModify}">
+                                                <a id="modify" href="/post/${post.id}?isModify=true" class="btn btn-primary btn-user btn-block">
+                                                    Modify
+                                                </a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a id="modifySubmit" class="btn btn-primary btn-user btn-block">
+                                                    Submit
+                                                </a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <a id="delete" class="btn btn-danger btn-user btn-block">
+                                            Delete
+                                        </a>
+                                    </c:if>
                                 </form>
                             </c:when>
                             <c:otherwise>
