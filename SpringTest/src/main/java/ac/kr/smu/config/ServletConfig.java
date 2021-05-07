@@ -1,11 +1,17 @@
 package ac.kr.smu.config;
 
+import ac.kr.smu.ArgumentResolver.UserArgumentResolver;
+import ac.kr.smu.Interceptor.LoginInterceptor;
+import ac.kr.smu.Interceptor.PostInterceptor;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.*;
 
 
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import java.util.List;
 
 @EnableWebMvc
 @Configuration
@@ -27,4 +33,16 @@ public class ServletConfig  implements WebMvcConfigurer {
         registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
     }
 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        WebMvcConfigurer.super.addInterceptors(registry);
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/board").addPathPatterns("/post/**");
+        registry.addInterceptor(new PostInterceptor()).addPathPatterns("/post/**");
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        WebMvcConfigurer.super.addArgumentResolvers(resolvers);
+        resolvers.add(new UserArgumentResolver());
+    }
 }

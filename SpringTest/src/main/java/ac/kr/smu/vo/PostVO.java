@@ -11,5 +11,5 @@ public class PostVO {
     private String title;
     private String content;
     private Timestamp created_date = new Timestamp(new Date().getTime());
-    private String name;
+    private UserVO user;
 }
