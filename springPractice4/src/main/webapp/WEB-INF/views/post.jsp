@@ -1,5 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="vo.UserVO" %>
+<%@ page import="vo.PostVO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page session="false" pageEncoding="UTF-8"%>
+
 
 <html lang="kr" >
 <head>
@@ -24,6 +28,8 @@
 
 <body class="bg-gradient-primary">
 
+
+
 <div class="container">
 
     <div class="card o-hidden border-0 shadow-lg my-5">
@@ -36,6 +42,7 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Create Post!</h1>
                         </div>
+
                         <c:choose>
                             <c:when test="${post!=null}">
                                 <form action="/post" method="post" class="user">
@@ -47,23 +54,25 @@
                                         <textarea class="form-control form-control-user" name="content" readonly>${post.content}</textarea>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" name="name" placeholder="name" readonly value="${post.name}">
+                                        <input type="text" class="form-control form-control-user" name="name" placeholder="name" value="${post.user.name}" readonly>
                                     </div>
-                                    <c:choose>
-                                        <c:when test="${!isModify}">
-                                            <a id="modify" href="/post/${post.id}?isModify=true" class="btn btn-primary btn-user btn-block">
-                                                Modify
-                                            </a>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <a id="modifySubmit" class="btn btn-primary btn-user btn-block">
-                                                Submit
-                                            </a>
-                                        </c:otherwise>
-                                    </c:choose>
-                                    <a id="delete" class="btn btn-danger btn-user btn-block">
-                                        Delete
-                                    </a>
+                                    <c:if test="${userSession == post.user.email}">
+                                        <c:choose>
+                                            <c:when test="${!isModify}">
+                                                <a id="modify" href="/post/${post.id}?isModify=true" class="btn btn-primary btn-user btn-block">
+                                                    Modify
+                                                </a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a id="modifySubmit" class="btn btn-primary btn-user btn-block">
+                                                    Submit
+                                                </a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <a id="delete" class="btn btn-danger btn-user btn-block">
+                                            Delete
+                                        </a>
+                                    </c:if>
 
                                 </form>
                             </c:when>
@@ -74,9 +83,6 @@
                                     </div>
                                     <div class="form-group">
                                         <textarea class="form-control form-control-user" name="content"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" name="name" placeholder="name">
                                     </div>
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
                                         Register Post
@@ -91,33 +97,36 @@
 
     </div>
 </div>
+
 <!-- Bootstrap core JavaScript-->
 <script src="/vendor/jquery/jquery.min.js"></script>
+
 <c:if test="${isModify}">
     <script>
-        $("input").removeAttr("readonly")
+        $("[name='title']").removeAttr("readonly")
         $("textarea").removeAttr("readonly")
         $("#modifySubmit").click(function (){
             var postVO =new  Object()
             postVO.id = $("[name='id']").val()
             postVO.title = $("[name='title']").val()
             postVO.content= $("[name='content']").val()
-            postVO.name = $("[name='name']").val()
 
             $.ajax({
                 type:"PUT",
                 url:"/post",
                 contentType:"application/json; charset=utf-8",
-                data:JSON.stringify(postVO),
-                success:function (data) {
-                    if(data)
-                        //location.href="/post/"+postVO.id
-                        location.href="/board"
+                data: JSON.stringify(postVO),
+                success:function(data) {
+                    if(data) {
+                        location.href = "/post/"+ postVO.id
+                        //location.href = "/board"
+                    }
+
                 }
+
             })
         })
     </script>
-
 </c:if>
 
 <script>
@@ -143,6 +152,7 @@
 
 <!-- Custom scripts for all pages-->
 <script src="/js/sb-admin-2.min.js"></script>
+
 
 </body>
 

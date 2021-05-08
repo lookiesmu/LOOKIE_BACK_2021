@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import service.PostService;
 import vo.PostVO;
+import vo.UserVO;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/post")
@@ -15,20 +18,21 @@ public class PostController {
 
     @GetMapping({"/{postId}", ""})
     public String getPost(@PathVariable(value = "postId", required = false) Integer postId,
-                          @RequestParam(value = "isModify", required = false) boolean isModify, Model model) {
-        if (postId != null)
+                          @RequestParam(value = "isModify", required = false) boolean isModify, Model model, HttpSession httpSession) {
+        if (postId != null) {
             model.addAttribute("post", postService.findById(postId));
+            model.addAttribute("userSession", httpSession.getAttribute("userSession"));
+        }
         if (isModify)
             model.addAttribute("isModify", true);
         else
             model.addAttribute("isModify", false);
-
         return "post";
     }
 
-    //작성 후 redirect
     @PostMapping
-    public String postPost(PostVO postVO){
+    public String postPost(PostVO postVO, UserVO userVO){
+        postVO.setUser(userVO);
         postService.save(postVO);
         return "redirect:/board";
     }
