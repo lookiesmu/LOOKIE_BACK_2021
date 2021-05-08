@@ -8,6 +8,8 @@ import service.PostService;
 import vo.PostVO;
 import vo.UserVO;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/post")
 public class PostController {
@@ -16,9 +18,11 @@ public class PostController {
 
     @GetMapping({"/{postId}", ""})
     public String getPost(@PathVariable(value = "postId", required = false) Integer postId,
-                          @RequestParam(value = "isModify", required = false) boolean isModify, Model model) {
-        if (postId != null)
+                          @RequestParam(value = "isModify", required = false) boolean isModify, Model model, HttpSession httpSession) {
+        if (postId != null) {
             model.addAttribute("post", postService.findById(postId));
+            model.addAttribute("userSession", httpSession.getAttribute("userSession"));
+        }
         if (isModify)
             model.addAttribute("isModify", true);
         else

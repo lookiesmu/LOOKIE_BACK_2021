@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/")
@@ -25,7 +26,7 @@ public class LoginController {
     @PostMapping
     public ResponseEntity<?> postLogin(@RequestBody UserVO userVO, HttpSession session){
         Map<String,Boolean> body = new HashMap<>();
-        boolean result = userService.checkPassword(userVO.getEmail(), userVO.getPassword());
+        boolean result = userService.checkPassword(userVO);
 
         body.put("success",result);
         if(result) {
