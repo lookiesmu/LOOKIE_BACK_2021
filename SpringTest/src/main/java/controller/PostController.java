@@ -1,12 +1,14 @@
 package controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import service.PostService;
 import vo.PostVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import vo.UserVO;
 
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/post")
@@ -16,22 +18,16 @@ public class PostController {
 
     @GetMapping({"/{postId}", ""})
     public String getPost(@PathVariable(value = "postId", required = false) Integer postId,
-                          @RequestParam(value = "isModify", required = false) boolean isModify, Model model) {
-        if (postId != null)
+                          @RequestParam(value = "isModify", required = false) boolean isModify, Model model, HttpSession httpSession) {
+        if (postId != null) {
             model.addAttribute("post", postService.findById(postId));
-
+            model.addAttribute("userSession", httpSession.getAttribute("userSession"));
+        }
         if (isModify)
             model.addAttribute("isModify", true);
         else
             model.addAttribute("isModify", false);
-
         return "post";
-    }
-
-    @PostMapping
-    public String postPost(PostVO postVO) {
-        postService.save(postVO);
-        return "board";
     }
 
     @PutMapping
@@ -45,5 +41,12 @@ public class PostController {
     public @ResponseBody boolean deletePost(@PathVariable int postId){
         postService.delete(postId);
         return true;
+    }
+
+    @PostMapping
+    public String postPost(PostVO postVO, UserVO userVO){
+        postVO.setUser(userVO);
+        postService.save(postVO);
+        return "redirect:/board";
     }
 }

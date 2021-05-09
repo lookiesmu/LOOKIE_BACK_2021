@@ -1,13 +1,14 @@
 package service;
 
 import mapper.PostMapper;
-import service.PostService;
-import vo.PostVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import vo.PostVO;
 
 import java.util.List;
 
+@Repository
 @Service
 public class PostServiceImpl implements PostService {
     @Autowired
@@ -32,6 +33,7 @@ public class PostServiceImpl implements PostService {
         return postMapper.update(postVO);
     }
 
+    @Override
     public void delete(int id) {
         postMapper.delete(id);
     }

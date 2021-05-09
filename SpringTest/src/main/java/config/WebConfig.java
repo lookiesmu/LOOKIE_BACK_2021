@@ -16,11 +16,9 @@ public class WebConfig implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
 
-
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(RootConfig.class);
         servletContext.addListener(new ContextLoaderListener(rootContext));
-
 
         AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext();
         applicationContext.register(ServletConfig.class);
@@ -28,8 +26,6 @@ public class WebConfig implements WebApplicationInitializer {
                 new DispatcherServlet(applicationContext));
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
-
-
 
         FilterRegistration.Dynamic filter = servletContext.addFilter("CHARACTER_ENCODING_FILTER",
                 CharacterEncodingFilter.class);
