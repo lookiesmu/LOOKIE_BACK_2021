@@ -85,14 +85,11 @@
             </div>
         </li>
 
-
         <hr class="sidebar-divider">
-
 
         <div class="sidebar-heading">
             Addons
         </div>
-
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
@@ -120,16 +117,13 @@
                 <span>Charts</span></a>
         </li>
 
-
         <li class="nav-item active">
             <a class="nav-link" href="tables.html">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Tables</span></a>
         </li>
 
-
         <hr class="sidebar-divider d-none d-md-block">
-
 
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -137,13 +131,9 @@
 
     </ul>
 
-
-
     <div id="content-wrapper" class="d-flex flex-column">
 
-
         <div id="content">
-
 
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -242,7 +232,6 @@
                         <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-envelope fa-fw"></i>
-                            <!-- Counter - Messages -->
                             <span class="badge badge-danger badge-counter">7</span>
                         </a>
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -374,10 +363,8 @@
                                     <tr>
                                         <td>${post.id}</td>
                                         <td><a href="/post/${post.id}">${post.title}</a></td>
-                                        <td>${post.name}</td>
-                                        <td>
-                                            <fmt:formatDate value="${post.created_date}"  pattern="yyyy-MM-dd"></fmt:formatDate>
-                                        </td>
+                                        <td>${post.user.name}</td>
+                                        <td><fmt:formatDate value="${post.created_date}" pattern="yyyy-MM-dd"/></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -406,8 +393,7 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -416,15 +402,20 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-body">
+                Select "Logout" below if you are ready to end your current session.
+            </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                    Cancel
+                </button>
+                <a class="btn btn-primary" id="logout">
+                    Logout
+                </a>
             </div>
         </div>
     </div>
 </div>
-
 <script src="/vendor/jquery/jquery.min.js"></script>
 <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -436,6 +427,18 @@
 <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
 <script src="/js/demo/datatables-demo.js"></script>
+
+<script>
+    $("#logout").click(function (){
+        $.ajax({
+            type:'POST',
+            url:'/logout',
+            success: function () {
+                location.href='/'
+            }
+        })
+    })
+</script>
 
 </body>
 

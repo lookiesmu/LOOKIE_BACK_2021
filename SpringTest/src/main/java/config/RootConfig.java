@@ -38,7 +38,6 @@ public class RootConfig {
         return dataSource;
     }
 
-
     @Bean
     public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSources){
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
@@ -55,7 +54,6 @@ public class RootConfig {
     public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactoryBean){
         return new SqlSessionTemplate(sqlSessionFactoryBean);
     }
-
 
     @Bean
     public DataSourceTransactionManager dataSourceTransactionManager(DataSource dataSource){
