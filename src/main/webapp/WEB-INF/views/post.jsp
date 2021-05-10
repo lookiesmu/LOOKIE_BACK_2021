@@ -36,7 +36,6 @@
                             <h1 class="h4 text-gray-900 mb-4">Create Post!</h1>
                         </div>
                         <c:choose>
-                            <!-- 글 보기 / 수정 -->
                             <c:when test="${post!=null}">
                                 <form action="/post" method="post" class="user">
                                     <input type="number" name="id" value="${post.id}" hidden>
@@ -70,7 +69,6 @@
                                     </c:if>
                                 </form>
                             </c:when>
-                            <!-- 글쓰기 -->
                             <c:otherwise>
                                 <form action="/post" method="post" class="user">
                                     <div class="form-group">
