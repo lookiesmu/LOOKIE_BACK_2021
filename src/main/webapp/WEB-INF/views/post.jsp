@@ -36,6 +36,7 @@
                             <h1 class="h4 text-gray-900 mb-4">Create Post!</h1>
                         </div>
                         <c:choose>
+                            <!-- 글 보기 / 수정 -->
                             <c:when test="${post!=null}">
                                 <form action="/post" method="post" class="user">
                                     <input type="number" name="id" value="${post.id}" hidden>
@@ -69,6 +70,7 @@
                                     </c:if>
                                 </form>
                             </c:when>
+                            <!-- 글쓰기 -->
                             <c:otherwise>
                                 <form action="/post" method="post" class="user">
                                     <div class="form-group">
@@ -77,6 +79,9 @@
                                     </div>
                                     <div class="form-group">
                                         <textarea class="form-control form-control-user" name="content"/></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="file" id="files" multiple="multiple">
                                     </div>
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
                                         Register Post
@@ -140,6 +145,50 @@
                 }
             })
         }
+    })
+</script>
+
+<!-- 글 등록 스크립트 -->
+<script>
+    $("#register").click(function (){
+        const postVO = new Object()
+        const formData = new FormData()
+        const files = $('#files')[0].files
+        let postId
+
+        postVO.title = $("[name='title']").val()
+        postVO.content = $("[name='content']").val()
+
+        $.ajax({
+            method:"POST",
+            url:"/post",
+            data: JSON.stringify(postVO),
+            contentType: "application/json; charset=UTF-8",
+            success: function (data){
+                postId = data
+
+                // 파일이 있다면 파일은 따로 전송
+                if(files.length != 0){
+                    for(let i=0; i<files.length; i++)
+                        formData.append('files',files[i])
+
+                    $.ajax({
+                        method:"POST",
+                        enctype: 'multipart/form-data',
+                        url:"/"+postId+"/file",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success:function(){
+                            location.href='/board'
+                        },
+                        error: function (e){console.log(e)}
+                    })
+                }
+                else
+                    location.href='/board'
+            }
+        })
     })
 </script>
 </body>
