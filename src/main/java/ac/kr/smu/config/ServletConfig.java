@@ -3,9 +3,11 @@ package ac.kr.smu.config;
 import ac.kr.smu.ArgumentResolver.UserArgumentResolver;
 import ac.kr.smu.interceptor.LoginInterceptor;
 import ac.kr.smu.interceptor.PostInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
 
 import java.util.List;
@@ -40,7 +42,7 @@ public class ServletConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry){
         WebMvcConfigurer.super.addInterceptors(registry);
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/board").addPathPatterns("/post/**");
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/board","/post/**","/*/file");
         registry.addInterceptor(new PostInterceptor()).addPathPatterns("/post/**");
     }
 
@@ -48,5 +50,12 @@ public class ServletConfig implements WebMvcConfigurer {
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         WebMvcConfigurer.super.addArgumentResolvers(resolvers);
         resolvers.add(new UserArgumentResolver());
+    }
+    /*
+        파일 요청 관련
+     */
+    @Bean
+    public StandardServletMultipartResolver standardServletMultipartResolver(){
+        return new StandardServletMultipartResolver();
     }
 }

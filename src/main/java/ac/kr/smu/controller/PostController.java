@@ -29,10 +29,10 @@ public class PostController {
     }
 
     @PostMapping
-    public String postPost(PostVO postVO, UserVO userVO) {
-        postVO.setUser(userVO);
+    public @ResponseBody int postPost(@RequestBody PostVO postVO, UserVO user) {
+        postVO.setUser(user);
         postService.save(postVO);
-        return "board";
+        return postVO.getId();
     }
 
     @PutMapping

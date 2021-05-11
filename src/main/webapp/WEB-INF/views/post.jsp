@@ -72,18 +72,17 @@
                             <c:otherwise>
                                 <form action="/post" method="post" class="user">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" name="title"
-                                               placeholder="Title">
+                                        <input type="text" class="form-control form-control-user" name="title" placeholder="Title">
                                     </div>
                                     <div class="form-group">
-                                        <textarea class="form-control form-control-user" name="content"/></textarea>
+                                        <textarea class="form-control form-control-user" name="content"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <input type="file" id="files" multiple="multiple">
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    <a id="register" class="btn btn-primary btn-user btn-block">
                                         Register Post
-                                    </button>
+                                    </a>
                                 </form>
                             </c:otherwise>
                         </c:choose>
@@ -149,10 +148,10 @@
 <!-- 글 등록 스크립트 -->
 <script>
     $("#register").click(function (){
-        const postVO = new Object()
-        const formData = new FormData()
-        const files = $('#files')[0].files
-        let postId
+        var postVO = new Object()
+        var formData = new FormData()
+        var files = $('#files')[0].files
+        var postId
 
         postVO.title = $("[name='title']").val()
         postVO.content = $("[name='content']").val()
@@ -164,10 +163,10 @@
             contentType: "application/json; charset=UTF-8",
             success: function (data){
                 postId = data
+                alert("파일")
 
-                // 파일이 있다면 파일은 따로 전송
                 if(files.length != 0){
-                    for(let i=0; i<files.length; i++)
+                    for(var i=0; i<files.length; i++)
                         formData.append('files',files[i])
 
                     $.ajax({
@@ -178,16 +177,18 @@
                         processData: false,
                         contentType: false,
                         success:function(){
+                            alert("성공")
                             location.href='/board'
                         },
                         error: function (e){console.log(e)}
                     })
                 }
                 else
-                    location.href='/board'
+                location.href='/board'
             }
         })
     })
+
 </script>
 </body>
 
