@@ -8,4 +8,7 @@
         INSERT INTO file(name,uuid,upload_path,post_id)
         VALUES(#{name},#{uuid},#{uploadPath},#{postId})
     </insert>
+    <select id="findById" resultType="FileVO">
+        SELECT * FROM file WHERE id = #{id}
+    </select>
 </mapper>

@@ -6,6 +6,7 @@ import ac.kr.smu.service.FileService;
 import ac.kr.smu.vo.FileVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -53,5 +54,15 @@ public class FileServiceImpl implements FileService {
                 fileMapper.save(fileVO);
             }catch (IOException e){e.printStackTrace();}
         }
+    }
+
+    @Override
+    public FileSystemResource getFileSystemResource(int id) {
+        FileSystemResource resource = new FileSystemResource(fileMapper.findById(id).getPath());
+
+        if(!resource.exists())
+            return null;
+
+        return resource;
     }
 }

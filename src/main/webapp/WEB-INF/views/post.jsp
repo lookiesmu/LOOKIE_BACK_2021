@@ -50,6 +50,13 @@
                                         <input type="text" class="form-control form-control-user"
                                                name="name" placeholder="name" readonly value="${post.user.name}">
                                     </div>
+                                    <c:if test="${post.fileList.size() != 0}">
+                                        <c:forEach var="file" items="${post.fileList}">
+                                            <a href="/${post.id}/file/${file.id}" class="btn btn-primary btn-user btn-block">
+                                                    ${file.name}
+                                            </a>
+                                        </c:forEach>
+                                    </c:if>
                                     <c:if test="${userSession == post.user.email}">
                                         <c:choose>
                                             <c:when test="${!isModify}">
