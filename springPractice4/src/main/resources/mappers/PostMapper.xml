@@ -16,7 +16,7 @@
         </association>
     </resultMap>
 
-    <insert id="save">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO post(title,content,created_date,user_id)
         VALUES(#{title},#{content},#{created_date},#{user.id})
     </insert>

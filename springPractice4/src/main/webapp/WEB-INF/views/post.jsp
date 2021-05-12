@@ -1,5 +1,3 @@
-<%@ page import="vo.UserVO" %>
-<%@ page import="vo.PostVO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page session="false" pageEncoding="UTF-8"%>
@@ -84,9 +82,12 @@
                                     <div class="form-group">
                                         <textarea class="form-control form-control-user" name="content"></textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    <div class="form-group">
+                                        <input type="file" id="files" multiple="multiple">
+                                    </div>
+                                    <a id="register" class="btn btn-primary btn-user btn-block">
                                         Register Post
-                                    </button>
+                                    </a>
                                 </form>
                             </c:otherwise>
                         </c:choose>
@@ -142,6 +143,48 @@
                 }
             })
         }
+    })
+</script>
+
+<script>
+    $("#register").click(function (){
+        var postVO = new Object()
+        var formData = new FormData()
+        var files = $('#files')[0].files
+        var postId
+
+        postVO.title = $("[name='title']").val()
+        postVO.content = $("[name='content']").val()
+
+        $.ajax({
+            method:"POST",
+            url:"/post",
+            data: JSON.stringify(postVO),
+            contentType: "application/json; charset=UTF-8",
+            success: function (data){
+                postId = data
+
+                if(files.length != 0){
+                    for(var i=0; i<files.length; i++)
+                        formData.append('files',files[i])
+
+                    $.ajax({
+                        method:"POST",
+                        enctype: 'multipart/form-data',
+                        url:"/"+postId+"/file",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success:function(){
+                            location.href='/board'
+                        },
+                        error: function (e){console.log(e)}
+                    })
+                }
+                else
+                    location.href='/board'
+            }
+        })
     })
 </script>
 
