@@ -3,6 +3,7 @@ package service;
 import config.WebConfig;
 import lombok.RequiredArgsConstructor;
 import mapper.FileMapper;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import vo.FileVO;
@@ -50,5 +51,16 @@ public class FileServiceImpl implements FileService {
             }
         }
     }
+
+    @Override
+    public FileSystemResource getFileSystemResource(int id) {
+        FileSystemResource resource = new FileSystemResource(fileMapper.findById(id).getPath());
+
+        if(!resource.exists())
+            return null;
+
+        return resource;
+    }
+
 }
 

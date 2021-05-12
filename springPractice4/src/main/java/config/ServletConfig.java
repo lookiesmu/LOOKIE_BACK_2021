@@ -3,6 +3,7 @@ package config;
 import ArgumentResolver.UserArgumentResolver;
 import Interceptor.LoginInterceptor;
 import Interceptor.PostInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -39,7 +40,7 @@ public class ServletConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         WebMvcConfigurer.super.addInterceptors(registry);
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/board","/post/**","/*/file");
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/board","/post/**","/*/file","/*/file/**");
         registry.addInterceptor(new PostInterceptor()).addPathPatterns("/post/*");
     }
 
@@ -49,6 +50,7 @@ public class ServletConfig implements WebMvcConfigurer {
         resolvers.add(new UserArgumentResolver());
     }
 
+    @Bean
     public StandardServletMultipartResolver standardServletMultipartResolver(){
         return new StandardServletMultipartResolver();
     }

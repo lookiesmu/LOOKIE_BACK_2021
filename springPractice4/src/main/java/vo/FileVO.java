@@ -11,4 +11,8 @@ public class FileVO {
     public String uuid;
     public String uploadPath;
     public int postId;
+
+    public String getPath(){
+        return uploadPath + "/" + uuid + "_" + name;
+    }
 }
