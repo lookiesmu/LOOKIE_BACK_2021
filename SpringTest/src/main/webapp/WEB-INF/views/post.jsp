@@ -1,5 +1,7 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html lang="kr">
 
 <head>
@@ -51,8 +53,9 @@
                             </div>
                             <div class="form-group">
                                     <input type="text" class="form-control form-control-user"
-                                           name="name" placeholder="Name" readonly value="${post.name}">
+                                           name="name" placeholder="Name" readonly value="${post.user.name}">
                             </div>
+                            <c:if test="${userSession == post.user.email }">
                             <c:choose>
                                 <c:when test="${!isModify}">
                                     <a id="modify" href="/post/${post.id}?isModify=true" class="btn btn-primary btn-user btn-block">Modify</a>
@@ -62,6 +65,7 @@
                                 </c:otherwise>
                             </c:choose>
                             <a id="delete" class="btn btn-danger btn-user btn-block">Delete</a>
+                            </c:if>
 
                         </form>
                             </c:when>
@@ -74,10 +78,6 @@
                                     </div>
                                     <div class="form-group">
                                         <textarea class="form-control form-control-user" name="content"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user"
-                                               name="name" placeholder="Name">
                                     </div>
                                     <button type="submit" class="btn btn-primary btn-user btn-block">Register Post!</button>
                                 </form>
@@ -101,7 +101,6 @@
             postVO.id = $("[name='id']").val()
             postVO.title = $("[name='title']").val()
             postVO.content = $("[name='content']").val()
-            postVO.name = $("[name='name']").val()
 
             $.ajax({
                 type: "PUT",
