@@ -65,4 +65,16 @@ public class FileServiceImpl implements FileService {
 
         return resource;
     }
+
+    @Override
+    public void deleteByPostId(int postId) {
+        log.info("deleteByPostId");
+        List<FileVO> fileList = fileMapper.findByPostId(postId);
+
+        fileMapper.deleteByPostId(postId);
+        fileList.stream().forEach(f ->{
+            File file = new File(f.getPath());
+            file.delete();
+        });
+    }
 }
