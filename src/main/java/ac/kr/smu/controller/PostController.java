@@ -2,6 +2,7 @@ package ac.kr.smu.controller;
 
 import ac.kr.smu.service.PostService;
 import ac.kr.smu.vo.PostVO;
+import ac.kr.smu.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,9 +29,10 @@ public class PostController {
     }
 
     @PostMapping
-    public String postPost(PostVO postVO){
+    public @ResponseBody int postPost(@RequestBody PostVO postVO, UserVO user) {
+        postVO.setUser(user);
         postService.save(postVO);
-        return "redirect:/board";
+        return postVO.getId();
     }
 
     @PutMapping

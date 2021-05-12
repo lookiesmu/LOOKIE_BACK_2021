@@ -6,13 +6,13 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import javax.servlet.FilterRegistration;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
+import javax.servlet.*;
 
 public class WebConfig implements WebApplicationInitializer{
-
+    public final static String UPLOAD_PATH = "C:/Users/yoonho/Desktop/files";
+    private final long MAX_FILE_SIZE = 20971520; //파일 최대 크기 1024 * 1024 * 20 = 20MB
+    private final long MAX_REQUEST_SIZE = 41943040;  // 요청에서 받을 수 있는 최대 크기 40MB
+    private final int FILE_SIZE_THRESHOLD = 20971520; // 파일이 디스크에 기록되는 크기 제한 20MB
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
@@ -30,6 +30,9 @@ public class WebConfig implements WebApplicationInitializer{
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(applicationContext));
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
+
+        MultipartConfigElement multipartConfigElement = new MultipartConfigElement("", MAX_FILE_SIZE, MAX_REQUEST_SIZE, FILE_SIZE_THRESHOLD);
+        dispatcher.setMultipartConfig(multipartConfigElement);
         /*
         	인코딩 설정, 해주지 않으면 한글이 깨진다
         */
@@ -38,5 +41,6 @@ public class WebConfig implements WebApplicationInitializer{
         filter.setInitParameter("encoding", "UTF-8");
         filter.setInitParameter("forceEcoding", "true");
         filter.addMappingForUrlPatterns(null, false, "/*");
+
     }
 }

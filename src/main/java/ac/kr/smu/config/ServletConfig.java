@@ -1,8 +1,16 @@
 package ac.kr.smu.config;
 
+import ac.kr.smu.ArgumentResolver.UserArgumentResolver;
+import ac.kr.smu.interceptor.LoginInterceptor;
+import ac.kr.smu.interceptor.PostInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
+
+import java.util.List;
 
 // 어노테이션
 @EnableWebMvc //WebMvc 관련 자동 설정
@@ -29,5 +37,26 @@ public class ServletConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/");
         registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
         // webapp 디렉토리를 루트로하여 설정
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry){
+        WebMvcConfigurer.super.addInterceptors(registry);
+        registry.addInterceptor(new LoginInterceptor())
+                .addPathPatterns("/board","/post/**","/*/file","/*/file/**");
+        registry.addInterceptor(new PostInterceptor()).addPathPatterns("/post/**");
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        WebMvcConfigurer.super.addArgumentResolvers(resolvers);
+        resolvers.add(new UserArgumentResolver());
+    }
+    /*
+        파일 요청 관련
+     */
+    @Bean
+    public StandardServletMultipartResolver standardServletMultipartResolver(){
+        return new StandardServletMultipartResolver();
     }
 }

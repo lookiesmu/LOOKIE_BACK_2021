@@ -1,6 +1,7 @@
-package ac.kr.smu.service;
+package ac.kr.smu.service.impl;
 
 import ac.kr.smu.mapper.PostMapper;
+import ac.kr.smu.service.PostService;
 import ac.kr.smu.vo.PostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
