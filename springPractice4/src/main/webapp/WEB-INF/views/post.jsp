@@ -43,7 +43,7 @@
 
                         <c:choose>
                             <c:when test="${post!=null}">
-                                <form action="/post" method="post" class="user">
+                                <form id="modifyForm" action="/post" method="put" class="user">
                                     <input type="number" name="id" value="${post.id}" hidden>
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user" name="title" placeholder="Title" readonly value="${post.title}">

@@ -2,6 +2,7 @@ package service;
 
 import config.WebConfig;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import mapper.FileMapper;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FileServiceImpl implements FileService {
@@ -62,5 +64,16 @@ public class FileServiceImpl implements FileService {
         return resource;
     }
 
+    @Override
+    public void deleteByPostId(int postId) {
+        List<FileVO> fileList = fileMapper.findByPostId(postId);
+
+        fileMapper.deleteByPostId(postId);
+
+        fileList.stream().forEach(f ->{
+            File file = new File(f.getPath());
+            file.delete();
+        });
+    }
 }
 
