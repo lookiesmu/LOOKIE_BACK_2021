@@ -6,12 +6,14 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import javax.servlet.FilterRegistration;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
+import javax.servlet.*;
 
 public class WebConfig implements WebApplicationInitializer {
+    public final static String UPLOAD_PATH = "/Users/jimin/Desktop/files";
+    private final long MAX_FILE_SIZE = 20971520;
+    private final long MAX_REQUEST_SIZE = 41943040;
+    private final int FILE_SIZE_THRESHOLD = 20971520;
+
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
@@ -30,6 +32,9 @@ public class WebConfig implements WebApplicationInitializer {
                 new DispatcherServlet(applicationContext));
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
+
+        MultipartConfigElement multipartConfigElement = new MultipartConfigElement(UPLOAD_PATH, MAX_FILE_SIZE, MAX_REQUEST_SIZE, FILE_SIZE_THRESHOLD);
+        dispatcher.setMultipartConfig(multipartConfigElement);
 
 
 
