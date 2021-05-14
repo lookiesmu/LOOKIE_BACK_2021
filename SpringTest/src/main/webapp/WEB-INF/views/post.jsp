@@ -41,8 +41,9 @@
                         </div>
                         <c:choose>
                             <c:when test="${post!=null}">
+                                <form action="/post" method="post" class="user">
+
                                 <input type="number" name="id" value="${post.id}" hidden>
-                        <form action="/post" method="post" class="user">
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <input type="text" class="form-control form-control-user" name="title" placeholder="Title" readonly value="${post.title}">
@@ -55,6 +56,14 @@
                                     <input type="text" class="form-control form-control-user"
                                            name="name" placeholder="Name" readonly value="${post.user.name}">
                             </div>
+                            <c:if test="${post.fileList.size() != 0}">
+                                    <c:forEach var="file" items="${post.fileList}">
+                                        <a href="/${post.id}/file/${file.id}" class="btn btn-primary btn-user btn-block">
+                                                ${file.name}
+                                        </a>
+                                    </c:forEach>
+                            </c:if>
+
                             <c:if test="${userSession == post.user.email }">
                             <c:choose>
                                 <c:when test="${!isModify}">
@@ -71,15 +80,18 @@
                             </c:when>
                             <c:otherwise>
                                 <form action="/post" method="post" class="user">
-                                    <div class="form-group row">
-                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                            <input type="text" class="form-control form-control-user" name="title" placeholder="Title">
-                                        </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" name="title" placeholder="Title">
                                     </div>
                                     <div class="form-group">
                                         <textarea class="form-control form-control-user" name="content"></textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">Register Post!</button>
+                                    <div class="form-group">
+                                        <input type="file" id="files" multiple="multiple">
+                                    </div>
+                                    <a id="register" class="btn btn-primary btn-user btn-block">
+                                        Register Post
+                                    </a>
                                 </form>
                             </c:otherwise>
                         </c:choose>
@@ -129,6 +141,48 @@
                 }
             })
         }
+    })
+</script>
+
+<script>
+    $("#register").click(function (){
+        var postVO = new Object()
+        var formData = new FormData()
+        var files = $('#files')[0].files
+        var postId
+
+        postVO.title = $("[name='title']").val()
+        postVO.content = $("[name='content']").val()
+
+        $.ajax({
+            method:"POST",
+            url:"/post",
+            data: JSON.stringify(postVO),
+            contentType: "application/json; charset=UTF-8",
+            success: function (data){
+                postId = data
+
+                if(files.length != 0){
+                    for(var i=0; i<files.length; i++)
+                        formData.append('files',files[i])
+
+                    $.ajax({
+                        method:"POST",
+                        enctype: 'multipart/form-data',
+                        url:"/"+postId+"/file",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success:function(){
+                            location.href='/board'
+                        },
+                        error: function (e){console.log(e)}
+                    })
+                }
+                else
+                    location.href='/board'
+            }
+        })
     })
 </script>
 

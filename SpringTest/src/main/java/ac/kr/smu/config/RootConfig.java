@@ -15,6 +15,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.beans.PropertyVetoException;
 import java.io.IOException;
 
 @Configuration
@@ -24,6 +25,22 @@ import java.io.IOException;
 public class RootConfig {
     @Autowired
     private ApplicationContext applicationContext;
+
+//    @Bean
+//    public ComboPooledDataSource comboPooledDataSource() {
+//        ComboPooledDataSource dataSource = new ComboPooledDataSource();
+//        try {
+//            dataSource.setDriverClass("net.sf.log4jdbc.sql.jdbcapi.DriverSpy");
+//            dataSource.setJdbcUrl("jdbc:log4jdbc:mysql://localhost:3306/spring?allowMultiQueries=true");
+//            dataSource.setUser("myunbongs");
+//            dataSource.setPassword("1030");
+//            dataSource.setCheckoutTimeout(3000);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return dataSource;
+//    }
 
     @Bean
     public ComboPooledDataSource comboPooledDataSource(){
@@ -38,7 +55,6 @@ public class RootConfig {
 
         return dataSource;
     }
-
     @Bean
     public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSources){
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
@@ -60,4 +76,6 @@ public class RootConfig {
     public DataSourceTransactionManager dataSourceTransactionManager(DataSource dataSource){
         return new DataSourceTransactionManager(dataSource);
     }
+
+
 }
