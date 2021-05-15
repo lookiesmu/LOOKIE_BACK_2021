@@ -37,9 +37,11 @@ LOOKIE 2021 BACKEND STUDY
 - [Spring Framework-20](https://velog.io/@dbghwns11/Spring-Framework-20) 
 
 ### 6주차 (5/23 ~ 5/29)
-- Spring Boot
-- Spring JPA
-
+- [Spring Boot-0](https://velog.io/@dbghwns11/Spring-Boot-0) 
+- [Spring Boot-1](https://velog.io/@dbghwns11/Spring-Boot-1) 
+- [Spring Boot-2](https://velog.io/@dbghwns11/Spring-Boot-2) 
+- [Spring Boot-3](https://velog.io/@dbghwns11/Spring-Boot-3)
+ 
 ### 7주차 (5/30 ~ 6/5)
 - Spring Boot로 기존 프로젝트 바꾸기
 
