@@ -14,12 +14,17 @@
             <result property="email" column="email" />
             <result property="name" column="name" />
         </association>
+        <collection property="fileList" column="id" select="findFileListById" ofType="FileVO"/>
     </resultMap>
 
-    <insert id="save">
+    <select id="findFileListById" resultType="FileVO">
+        SELECT * FROM file WHERE post_id = #{id}
+    </select>
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO post(title,content,created_date,user_id)
         VALUES(#{title},#{content},#{created_date},#{user.id})
     </insert>
+
     <select id="findAll" resultType="PostVO" resultMap="post">
         SELECT * from post as p JOIN user AS u on p.user_id = u.id
     </select>
