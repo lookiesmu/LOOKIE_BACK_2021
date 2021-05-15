@@ -11,4 +11,10 @@
     <select id="findById" resultType="FileVO">
         SELECT * FROM file WHERE id = #{id}
     </select>
+    <select id="findByPostId" resultType="FileVO">
+        SELECT * FROM file WHERE post_id = #{postId}
+    </select>
+    <delete id="deleteByPostId">
+        DELETE FROM file WHERE post_id = #{postId}
+    </delete>
 </mapper>
