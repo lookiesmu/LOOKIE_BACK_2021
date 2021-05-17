@@ -7,6 +7,7 @@
     <typeAliases>
         <typeAlias type="vo.PostVO" alias="PostVO"/>
         <typeAlias type="vo.UserVO" alias="UserVO"/>
+        <typeAlias type="vo.FileVO" alias="FileVO"/>
     </typeAliases>
 
 </configuration>

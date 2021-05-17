@@ -4,6 +4,7 @@ import mapper.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import vo.PostVO;
 
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
     @Autowired
     private PostMapper postMapper;
+    @Autowired
+    private FileService fileService;
 
     public void save(PostVO postVO){
         postMapper.save(postVO);
@@ -34,7 +37,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public void delete(int id) {
+        fileService.deleteByPostId(id);
         postMapper.delete(id);
     }
 }
