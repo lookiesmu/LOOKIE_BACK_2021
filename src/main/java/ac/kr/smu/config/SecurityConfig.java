@@ -1,16 +1,23 @@
 package ac.kr.smu.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity //security 자동설정 허용
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)//Security 관련 Annotation 허용
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -29,11 +36,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        /*
-            테스트를 위해 username user와 비밀번호 1111 권한은 USER권한을 가진 user를 만듭니다.
-            {noop}은 비밀번호를 인코딩하지 않았다는 의미입니다.
-            Spring Security에서 설정을 하지 않는다면 우리가 표현하는 id는 username이고 비밀번호는 password입니다.
-        */
-        auth.inMemoryAuthentication().withUser("user").password("{noop}1111").roles("USER");
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+
     }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
 }
