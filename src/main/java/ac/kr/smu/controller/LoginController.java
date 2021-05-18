@@ -5,6 +5,7 @@ import ac.kr.smu.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,32 +13,31 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
+@Controller
 @RequestMapping("/")
-@RequiredArgsConstructor
 public class LoginController {
-    private final UserService userService;
+//    private final UserService userService;
 
     @GetMapping
-    public ModelAndView getLogin(){
-        return new ModelAndView("login");
+    public String getLogin(){
+        return "login";
     }
-    @PostMapping
-    public ResponseEntity<?> postLogin(@RequestBody UserVO userVO, HttpSession session){
-        Map<String,Boolean> body = new HashMap<>();
-        boolean result = userService.checkPassword(userVO.getEmail(), userVO.getPassword());
-
-        body.put("success",result);
-        if(result) {
-            session.setMaxInactiveInterval(60*30);//초 단위로 세션의 만료시간 설정
-            session.setAttribute("userSession",userVO.getEmail());
-        }
-
-        return ResponseEntity.ok(body);
-
-    }
-    @PostMapping("/logout")
-    public void logout(HttpSession session){
-        session.invalidate();
-    }
+//    @PostMapping
+//    public ResponseEntity<?> postLogin(@RequestBody UserVO userVO, HttpSession session){
+//        Map<String,Boolean> body = new HashMap<>();
+//        boolean result = userService.checkPassword(userVO.getEmail(), userVO.getPassword());
+//
+//        body.put("success",result);
+//        if(result) {
+//            session.setMaxInactiveInterval(60*30);//초 단위로 세션의 만료시간 설정
+//            session.setAttribute("userSession",userVO.getEmail());
+//        }
+//
+//        return ResponseEntity.ok(body);
+//
+//    }
+//    @PostMapping("/logout")
+//    public void logout(HttpSession session){
+//        session.invalidate();
+//    }
 }
