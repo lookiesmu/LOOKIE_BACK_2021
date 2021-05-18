@@ -42,10 +42,10 @@
 
                         <c:choose>
                             <c:when test="${post!=null}">
-                                <form action="/post" method="post" class="user">
+                                <form id="modifyForm" action="/post" method="PUT" class="user">
                                     <input type="number" name="id" value="${post.id}" hidden>
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" name="title" placeholder="Title" readonly value="${post.title}">
+                                        <input type="text" class="form-control form-control-user" name="title" placeholder="Title" value="${post.title}" readonly>
                                     </div>
                                     <div class="form-group">
                                         <textarea class="form-control form-control-user" name="content" readonly>${post.content}</textarea>
@@ -53,22 +53,12 @@
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user" name="name" placeholder="name" value="${post.user.name}" readonly>
                                     </div>
-                                    <c:if test="${userSession == post.user.email}">
-                                        <c:choose>
-                                            <c:when test="${!isModify}">
-                                                <a id="modify" href="/post/${post.id}?isModify=true" class="btn btn-primary btn-user btn-block">
-                                                    Modify
-                                                </a>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <a id="modifySubmit" class="btn btn-primary btn-user btn-block">
-                                                    Submit
-                                                </a>
-                                            </c:otherwise>
-                                        </c:choose>
-                                        <a id="delete" class="btn btn-danger btn-user btn-block">
-                                            Delete
-                                        </a>
+                                    <c:if test="${post.fileList.size() != 0}">
+                                        <c:forEach var="file" items="${post.fileList}">
+                                            <a href="/${post.id}/file/${file.id}" class="btn btn-primary btn-user btn-block">
+                                                    ${file.name}
+                                            </a>
+                                        </c:forEach>
                                     </c:if>
 
                                 </form>
@@ -81,9 +71,12 @@
                                     <div class="form-group">
                                         <textarea class="form-control form-control-user" name="content"></textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    <div class="form-group">
+                                        <input type="file" id="files" multiple="multiple">
+                                    </div>
+                                    <a id="register" class="btn btn-primary btn-user btn-block">
                                         Register Post
-                                    </button>
+                                    </a>
                                 </form>
                             </c:otherwise>
                         </c:choose>
@@ -134,6 +127,48 @@
                 }
             })
         }
+    })
+</script>
+
+<script>
+    $("#register").click(function (){
+        var postVO = new Object()
+        var formData = new FormData()
+        var files = $('#files')[0].files
+        var postId
+
+        postVO.title = $("[name='title']").val()
+        postVO.content = $("[name='content']").val()
+
+        $.ajax({
+            method:"POST",
+            url:"/post",
+            data: JSON.stringify(postVO),
+            contentType: "application/json; charset=UTF-8",
+            success: function (data){
+                postId = data
+
+                if(files.length != 0){
+                    for(var i=0; i<files.length; i++)
+                        formData.append('files',files[i])
+
+                    $.ajax({
+                        method:"POST",
+                        enctype: 'multipart/form-data',
+                        url:"/"+postId+"/file",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success:function(){
+                            location.href='/board'
+                        },
+                        error: function (e){console.log(e)}
+                    })
+                }
+                else
+                    location.href='/board'
+            }
+        })
     })
 </script>
 
