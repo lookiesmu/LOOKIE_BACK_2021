@@ -40,7 +40,7 @@ public class ServletConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         WebMvcConfigurer.super.addInterceptors(registry);
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/board","/post/**","/*/file","/*/file/**");
+        //registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/board","/post/**","/*/file","/*/file/**");
         registry.addInterceptor(new PostInterceptor()).addPathPatterns("/post/*");
     }
 

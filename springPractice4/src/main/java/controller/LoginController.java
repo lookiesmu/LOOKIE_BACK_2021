@@ -2,6 +2,7 @@ package controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import service.UserService;
@@ -12,17 +13,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@RestController
-@RequiredArgsConstructor
+@Controller
 @RequestMapping("/")
 public class LoginController {
-    private final UserService userService;
+    //private final UserService userService;
 
     @GetMapping
-    public ModelAndView getLogin(){
-        return new ModelAndView("login");
+    public String getLogin(){
+        return "login";
     }
-
+/*
     @PostMapping
     public ResponseEntity<?> postLogin(@RequestBody UserVO userVO, HttpSession session){
         Map<String,Boolean> body = new HashMap<>();
@@ -43,4 +43,5 @@ public class LoginController {
     public void logout(HttpSession session){
         session.invalidate();
     }
+ */
 }
