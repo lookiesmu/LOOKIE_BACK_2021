@@ -6,4 +6,5 @@ public interface UserMapper {
     public void save(UserVO userVO);
     public int checkEmailDuplication(String email);
     public UserVO findByEmail(String email);
+    public UserVO findById(int id);
 }
