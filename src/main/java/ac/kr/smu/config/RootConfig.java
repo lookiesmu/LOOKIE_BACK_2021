@@ -18,7 +18,7 @@ import java.io.IOException;
 
 @Configuration
 @MapperScan("ac.kr.smu.mapper")
-@ComponentScan("ac.kr.smu.service") //service 패키지에 있는 @Service Annotation이 붙은 클래스들을 Bean으로 등록
+@ComponentScan(basePackages = {"ac.kr.smu.service", "ac.kr.smu.jwt"}) //service 패키지에 있는 @Service Annotation이 붙은 클래스들을 Bean으로 등록
 @EnableTransactionManagement //트랜잭션 관리를 위한 Annotation
 public class RootConfig {
     @Autowired

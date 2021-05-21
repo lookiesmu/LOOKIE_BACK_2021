@@ -13,6 +13,7 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
     private final UserMapper userMapper;
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return userMapper.findByEmail(s);
+//        return userMapper.findByEmail(s);
+        return userMapper.findById(Integer.valueOf(s));
     }
 }

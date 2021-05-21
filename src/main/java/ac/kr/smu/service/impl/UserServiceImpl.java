@@ -24,11 +24,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.checkEmailDuplication(email)==0;
     }
 
-//    @Override
-//    public boolean checkPassword(String email, String password) {
-//        return password.equals(userMapper.findByEmail(email).getPassword());
-//
-//    }
+    @Override
+    public boolean checkPassword(String email, String password) {
+        return passwordEncoder.matches(password,userMapper.findByEmail(email).getPassword());
+    }
 
     @Override
     public UserVO findByEmail(String email) {
