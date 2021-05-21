@@ -1,7 +1,6 @@
 package ac.kr.smu.config;
 
-import ac.kr.smu.ArgumentResolver.UserArgumentResolver;
-import ac.kr.smu.Interceptor.LoginInterceptor;
+import ac.kr.smu.resolver.UserArgumentResolver;
 import ac.kr.smu.Interceptor.PostInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -38,7 +37,7 @@ public class ServletConfig  implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         WebMvcConfigurer.super.addInterceptors(registry);
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/board","/post/**","/*/file/**");
+        //registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/board","/post/**","/*/file/**");
         registry.addInterceptor(new PostInterceptor()).addPathPatterns("/post/**");
     }
 
@@ -50,6 +49,6 @@ public class ServletConfig  implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         WebMvcConfigurer.super.addArgumentResolvers(resolvers);
-        resolvers.add(new UserArgumentResolver());
+        // resolvers.add(new UserArgumentResolver());
     }
 }

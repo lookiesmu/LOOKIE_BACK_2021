@@ -21,7 +21,7 @@ import java.io.IOException;
 @Configuration
 @EnableTransactionManagement
 @MapperScan("ac.kr.smu.mapper")
-@ComponentScan("ac.kr.smu.service")
+@ComponentScan(basePackages = {"ac.kr.smu.service", "ac.kr.smu.provider", "ac.kr.smu.filter"})
 public class RootConfig {
     @Autowired
     private ApplicationContext applicationContext;
