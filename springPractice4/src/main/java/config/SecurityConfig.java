@@ -29,20 +29,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //로그인 성공 -> /board로 이동
-        /*
         http.httpBasic().and().formLogin().loginPage("/").loginProcessingUrl("/login").defaultSuccessUrl("/board",true)
                 .and().logout().deleteCookies("JSESSIONID").invalidateHttpSession(true)
                 .and().authorizeRequests()
                 .antMatchers("/vendor/**","/css/**","/js/**","/scss/**","/img/**","/","/user").permitAll()
+                .antMatchers("/board").hasRole("USER")
                 .anyRequest().authenticated().and().csrf().disable();
 
-         */
+         /*
         http.httpBasic().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests()
                 .antMatchers("/vendor/**","/css/**","/js/**","/scss/**","/img/**","/","/user").permitAll()
                 .anyRequest().authenticated().and().csrf().disable()
                 .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+         */
     }
 
     @Override

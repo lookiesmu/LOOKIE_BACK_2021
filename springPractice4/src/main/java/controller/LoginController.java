@@ -19,14 +19,16 @@ import java.util.Map;
 @Controller
 @RequestMapping("/")
 public class LoginController {
-    private final UserService userService;
-    private final JWTTokenProvider tokenProvider;
+    //private final UserService userService;
+    //private final JWTTokenProvider tokenProvider;
 
     @GetMapping
     public String getLogin(){
         return "login";
     }
 
+    /*
+    //JWT
     @PostMapping
     public @ResponseBody ResponseEntity<?> postLogin(@RequestBody UserVO userVO){
         Map<String, String> body = new HashMap<>();
@@ -41,7 +43,9 @@ public class LoginController {
         return ResponseEntity.ok(body);
 
     }
-/*
+     */
+
+    /*
     @PostMapping
     public ResponseEntity<?> postLogin(@RequestBody UserVO userVO, HttpSession session){
         Map<String,Boolean> body = new HashMap<>();
