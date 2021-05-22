@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page session="false" pageEncoding="UTF-8"%>
 
@@ -61,24 +62,24 @@
                                             </a>
                                         </c:forEach>
                                     </c:if>
-                                    <c:if test="${userSession == post.user.email}">
-                                        <c:choose>
-                                            <c:when test="${!isModify}">
-                                                <a id="modify" href="/post/${post.id}?isModify=true" class="btn btn-primary btn-user btn-block">
-                                                    Modify
-                                                </a>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <a id="modifySubmit" class="btn btn-primary btn-user btn-block">
-                                                    Submit
-                                                </a>
-                                            </c:otherwise>
-                                        </c:choose>
-                                        <a id="delete" class="btn btn-danger btn-user btn-block">
-                                            Delete
-                                        </a>
-                                    </c:if>
-
+                                    <sec:authentication property="principal" var="user"/>
+                                        <c:if test="${user.email == post.user.email}">
+                                            <c:choose>
+                                                <c:when test="${!isModify}">
+                                                    <a id="modify" href="/post/${post.id}?isModify=true" class="btn btn-primary btn-user btn-block">
+                                                        Modify
+                                                    </a>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <a id="modifySubmit" class="btn btn-primary btn-user btn-block">
+                                                        Submit
+                                                    </a>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <a id="delete" class="btn btn-danger btn-user btn-block">
+                                                Delete
+                                            </a>
+                                        </c:if>
                                 </form>
                             </c:when>
                             <c:otherwise>

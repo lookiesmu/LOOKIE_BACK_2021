@@ -17,4 +17,8 @@
         SELECT * FROM user where email=#{email}
     </select>
 
+    <select id="findById" resultType="UserVO">
+        SELECT * FROM user where id=#{id}
+    </select>
+
 </mapper>

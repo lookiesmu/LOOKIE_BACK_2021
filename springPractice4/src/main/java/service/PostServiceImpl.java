@@ -3,6 +3,8 @@ package service;
 import lombok.extern.slf4j.Slf4j;
 import mapper.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vo.PostVO;
@@ -21,6 +23,8 @@ public class PostServiceImpl implements PostService {
         postMapper.save(postVO);
     }
 
+    //@Secured("ROLE_ADMIN")
+    //@PreAuthorize("hasRole('ADMIN')")
     @Override
     public List<PostVO> findAll() {
         return postMapper.findAll();
