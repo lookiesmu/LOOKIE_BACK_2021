@@ -3,6 +3,7 @@ package ac.kr.smu.service;
 import ac.kr.smu.mapper.PostMapper;
 import ac.kr.smu.vo.PostVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,8 @@ public class PostServiceImpl implements PostService {
         postMapper.save(postVO);
     }
 
+    // @PreAuthorize("hasRole('ADMIN')")
+    // @Secured("ROLE_ADMIN")
     @Override
     public List<PostVO> findAll() {
         return postMapper.findAll();

@@ -37,46 +37,49 @@
                 <div class="col-lg-7">
                     <div class="p-5">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Create an Post !</h1>
+                            <h1 class="h4 text-gray-900 mb-4">Create Post!</h1>
                         </div>
                         <c:choose>
                             <c:when test="${post!=null}">
                                 <form action="/post" method="post" class="user">
-
-                                <input type="number" name="id" value="${post.id}" hidden>
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="text" class="form-control form-control-user" name="title" placeholder="Title" readonly value="${post.title}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control form-control-user" name="content" readonly>${post.content}</textarea>
-                            </div>
-                            <div class="form-group">
-                                    <input type="text" class="form-control form-control-user"
-                                           name="name" placeholder="Name" readonly value="${post.user.name}">
-                            </div>
-                            <c:if test="${post.fileList.size() != 0}">
-                                    <c:forEach var="file" items="${post.fileList}">
-                                        <a href="/${post.id}/file/${file.id}" class="btn btn-primary btn-user btn-block">
-                                                ${file.name}
+                                    <input type="number" name="id" value="${post.id}" hidden>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" name="title"
+                                               placeholder="Title" readonly value="${post.title}">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control form-control-user" name="content" readonly>${post.content}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user"
+                                               name="name" placeholder="name" readonly value="${post.user.name}">
+                                    </div>
+                                    <c:if test="${post.fileList.size() != 0}">
+                                        <c:forEach var="file" items="${post.fileList}">
+                                            <a href="/${post.id}/file/${file.id}" class="btn btn-primary btn-user btn-block">
+                                                    ${file.name}
+                                            </a>
+                                        </c:forEach>
+                                    </c:if>
+                                    <sec:authentication property="principal" var="user"/>
+                                    <c:if test="${user.email == post.user.email}">
+                                        <c:choose>
+                                            <c:when test="${!isModify}">
+                                                <a id="modify" href="/post/${post.id}?isModify=true" class="btn btn-primary btn-user btn-block">
+                                                    Modify
+                                                </a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a id="modifySubmit" class="btn btn-primary btn-user btn-block">
+                                                    Submit
+                                                </a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <a id="delete" class="btn btn-danger btn-user btn-block">
+                                            Delete
                                         </a>
-                                    </c:forEach>
-                            </c:if>
-
-                            <c:if test="${userSession == post.user.email }">
-                            <c:choose>
-                                <c:when test="${!isModify}">
-                                    <a id="modify" href="/post/${post.id}?isModify=true" class="btn btn-primary btn-user btn-block">Modify</a>
-                                </c:when>
-                                <c:otherwise>
-                                    <a id="modifySubmit" class="btn btn-primary btn-user btn-block">Submit</a>
-                                </c:otherwise>
-                            </c:choose>
-                            <a id="delete" class="btn btn-danger btn-user btn-block">Delete</a>
-                            </c:if>
-
-                        </form>
+                                    </c:if>
+                                </form>
                             </c:when>
                             <c:otherwise>
                                 <form action="/post" method="post" class="user">
@@ -99,6 +102,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
