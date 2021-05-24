@@ -34,17 +34,14 @@ public class ServletConfig implements WebMvcConfigurer {
     }
 
     @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        WebMvcConfigurer.super.addArgumentResolvers(resolvers);
-        resolvers.add(new UserArgumentResolver());
+    public void addInterceptors(InterceptorRegistry registry) {
+        WebMvcConfigurer.super.addInterceptors(registry);
+        registry.addInterceptor(new PostInterceptor()).addPathPatterns("/post/*");
     }
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        WebMvcConfigurer.super.addInterceptors(registry);
-        registry.addInterceptor(new LoginInterceptor())
-                .addPathPatterns("/board","/post/**","/*/file","/*/file/**");
-        registry.addInterceptor(new PostInterceptor()).addPathPatterns("/post/**");
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        WebMvcConfigurer.super.addArgumentResolvers(resolvers);
     }
 
     @Bean
