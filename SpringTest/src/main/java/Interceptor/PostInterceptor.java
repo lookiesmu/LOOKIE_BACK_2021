@@ -14,7 +14,7 @@ public class PostInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String uri = request.getRequestURI();// ex) /post/1
+        String uri = request.getRequestURI();
         HttpSession session = request.getSession();
 
         if(postService==null){

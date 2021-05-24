@@ -19,6 +19,11 @@ import java.util.List;
 public class FileController {
     private final FileService fileService;
 
+    @PostMapping
+    public void postFile(@RequestParam("files") List<MultipartFile> files, @PathVariable("postId") int postId){
+        fileService.saveAll(postId,files);
+    }
+
     @GetMapping(value = "/{fileId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<FileSystemResource> getFile(@PathVariable("fileId") int fileId,
                                                       @RequestHeader("User-Agent") String userAgent){
@@ -28,7 +33,6 @@ public class FileController {
             return ResponseEntity.notFound().build();
 
         String fileName = resource.getFilename();
-
         fileName = fileName.substring(fileName.indexOf("_")+1);
         HttpHeaders headers = new HttpHeaders();
 
@@ -48,8 +52,5 @@ public class FileController {
 
         return new ResponseEntity(resource,headers, HttpStatus.OK);
     }
-    @PostMapping
-    public void postFile(@RequestParam("files") List<MultipartFile> files, @PathVariable("postId") int postId){
-        fileService.saveAll(postId,files);
-    }
+
 }

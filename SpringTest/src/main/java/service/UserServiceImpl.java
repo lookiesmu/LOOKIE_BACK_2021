@@ -9,9 +9,11 @@ import vo.UserVO;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void save(UserVO userVO) {
+        userVO.setPassword(passwordEncoder.encode(userVO.getPassword()));
         userMapper.save(userVO);
     }
 
@@ -20,10 +22,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.checkEmailDuplication(email)==0;
     }
 
-    @Override
-    public boolean checkPassword(UserVO userVO) {
-        return userVO.getPassword().equals(userMapper.findByEmail(userVO.getEmail()).getPassword());
-    }
 
     @Override
     public UserVO findByEmail(String email) {

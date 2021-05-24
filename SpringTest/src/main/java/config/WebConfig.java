@@ -18,7 +18,7 @@ public class WebConfig implements WebApplicationInitializer {
     public void onStartup(ServletContext servletContext) throws ServletException {
 
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-        rootContext.register(RootConfig.class);
+        rootContext.register(RootConfig.class, SecurityConfig.class);
         servletContext.addListener(new ContextLoaderListener(rootContext));
 
         AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext();
@@ -31,10 +31,14 @@ public class WebConfig implements WebApplicationInitializer {
         MultipartConfigElement multipartConfigElement = new MultipartConfigElement(UPLOAD_PATH, MAX_FILE_SIZE, MAX_REQUEST_SIZE, FILE_SIZE_THRESHOLD);
         dispatcher.setMultipartConfig(multipartConfigElement);
 
+
         FilterRegistration.Dynamic filter = servletContext.addFilter("CHARACTER_ENCODING_FILTER",
                 CharacterEncodingFilter.class);
         filter.setInitParameter("encoding", "UTF-8");
         filter.setInitParameter("forceEncoding", "true");
         filter.addMappingForUrlPatterns(null, false, "/*");
+
+        FilterRegistration.Dynamic securityFilter = servletContext.addFilter("springSecurityFilterChain", DelegatingFilterProxy.class);
+        securityFilter.addMappingForUrlPatterns(null, false, "/*");
     }
 }
