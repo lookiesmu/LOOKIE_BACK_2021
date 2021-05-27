@@ -1,3 +1,7 @@
 SpringTest/.idea/
 SpringTest/target
 SpringTest/SpringTest02.iml
+
+SpringBoot/.idea/
+SpringBoot/.gradle/
+SpringBoot/gradle/

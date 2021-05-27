@@ -1,0 +1,5 @@
+rootProject.name = 'springboot'
+include 'SpringBoot-API'
+include 'SpringBoot-Domain'
+include 'SpringBoot-API'
+
