@@ -1,3 +1,7 @@
-.idea/
-target
-SpringTest02.iml
+SpringTest/.idea/
+SpringTest/target
+SpringTest/SpringTest02.iml
+
+SpringBoot/.idea/
+SpringBoot/.gradle/
+SpringBoot/gradle/
